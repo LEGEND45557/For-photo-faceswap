@@ -18,6 +18,10 @@ VAE_MODELS=(
 "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors"
 )
 
+TEXT_ENCODER_MODELS=(
+"https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors"
+)
+
 ### ===== FUNCTIONS ===== ###
 
 download_model() {
@@ -27,7 +31,7 @@ download_model() {
     mkdir -p "$dir"
 
     echo "Downloading: $url"
-    
+
     if [[ -n "$HF_TOKEN" && "$url" == *"huggingface.co"* ]]; then
         wget --header="Authorization: Bearer $HF_TOKEN" \
              -qnc --content-disposition --show-progress \
@@ -62,6 +66,7 @@ echo ""
 download_group "${COMFYUI_DIR}/models/diffusion_models" "${DIFFUSION_MODELS[@]}"
 download_group "${COMFYUI_DIR}/models/loras" "${LORA_MODELS[@]}"
 download_group "${COMFYUI_DIR}/models/vae" "${VAE_MODELS[@]}"
+download_group "${COMFYUI_DIR}/models/text_encoders" "${TEXT_ENCODER_MODELS[@]}"
 
 echo ""
 echo "Provisioning complete."
